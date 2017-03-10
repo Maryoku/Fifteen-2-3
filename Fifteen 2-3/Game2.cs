@@ -49,7 +49,7 @@ namespace Fifteen_2_3
                     if (Dictionary[0].Y + 1 < Size)
                     {
                         int shuffleValue = Field[Dictionary[0].X, Dictionary[0].Y + 1];
-                        base.Shift(shuffleValue);
+                        Shift(shuffleValue);
                     }
                 }
             }
