@@ -10,10 +10,10 @@ namespace Fifteen_2_3
     class Game
     {
         public int[,] Field;
-        public int size;
+        public int Size;
 
-        public int zeroX;
-        public int zeroY;
+        public int ZeroX;
+        public int ZeroY;
 
         public Dictionary<int, Coordinate> Dictionary = new Dictionary<int, Coordinate>();
 
@@ -21,23 +21,23 @@ namespace Fifteen_2_3
         {
             int count = 0;
 
-            size = (int)Math.Sqrt(values.Length);
+            Size = (int)Math.Sqrt(values.Length);
 
-            if (values.Length != Math.Pow(size, 2))
+            if (values.Length != Math.Pow(Size, 2))
             {
                 throw new ArgumentException("Поле не соответстует правилам");
             }
 
-            this.Field = new int[size, size];
+            this.Field = new int[Size, Size];
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Size; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < Size; j++)
                 {
                     if (values[count] == 0)
                     {
-                        zeroX = i;
-                        zeroY = j;
+                        ZeroX = i;
+                        ZeroY = j;
 
                         Field[i, j] = values[count];
                         Dictionary.Add(values[count], new Coordinate(i, j));
@@ -52,7 +52,7 @@ namespace Fifteen_2_3
                 }
             }
 
-            for(int i = 0; i < values.Length; i++) // а есть ли смысл проверять если вываливается "элемент с таким ключом уже есть"
+            for(int i = 0; i < values.Length; i++)
             {
                 if (!values.Contains(i))
                 {
@@ -62,31 +62,26 @@ namespace Fifteen_2_3
 
         }
 
-        public int this[int i, int j]
+        private int this[int i, int j]
         {
             get
             {
                 return Field[i, j];
             }
-            set // а нужен ли он тут?
-            {
-                Field[i, j] = value;
-            }
         }
 
         public Coordinate GetLocation(int value) 
-            // нет смысла ловить исключения, т.к. вываливается искл dictionary при несущ знач
         {
             return Dictionary[value];
         }
 
-        public virtual void Shift(int value) // под 2-3 переписывать без изменения исходного поля?
+        public virtual void Shift(int value)
         {
             if (Dictionary[value] - Dictionary[0] == 1)
             {
                 Coordinate positionZero = Dictionary[0];
-                this[Dictionary[0].X, Dictionary[0].Y] = value;
-                this[Dictionary[value].X, Dictionary[value].Y] = 0;
+                Field[Dictionary[0].X, Dictionary[0].Y] = value;
+                Field[Dictionary[value].X, Dictionary[value].Y] = 0;
                 Dictionary[0] = Dictionary[value];
                 Dictionary[value] = positionZero;
             }
@@ -94,16 +89,6 @@ namespace Fifteen_2_3
             {
                 throw new ArgumentException("Невозможно передвинуть фишку");
             }
-
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    Console.Write("{0} ", Field[i, j]);
-                }
-                Console.WriteLine("");
-            }
-            Console.WriteLine("");
         }
 
 

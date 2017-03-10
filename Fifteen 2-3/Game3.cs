@@ -8,35 +8,31 @@ namespace Fifteen_2_3
 {
     class Game3 : Game2
     {
-        private List<int> History;
+        private List<int> history;
 
         public Game3(params int[] values) : base(values)
         {
-            History = new List<int>();
+            history = new List<int>();
         }
 
         public override void Shift(int value)
         {
             base.Shift(value);
-            History.Add(value);
+            history.Add(value);
         }
 
         /**** Откат ходов ****/
         public void RollbackSteps(int countMovies)
         {
-            if (countMovies > History.Count)
+            if (countMovies > history.Count)
                 throw new ArgumentException("Некорректное количество шагов для отката");
 
             int lastMove = 0;
             for (int i = 0; i < countMovies; i++)
             {
-                lastMove = History.Last();
-                History.Remove(lastMove);
-                this.Shift(lastMove);
-
-                // костыль для момента когда мы откат записываем в историю как ход
-                lastMove = History.Last();
-                History.Remove(lastMove);
+                lastMove = history.Last();
+                history.Remove(lastMove);
+                base.Shift(lastMove);
             }
         }
         /*********************/

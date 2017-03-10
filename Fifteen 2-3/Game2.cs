@@ -8,69 +8,62 @@ namespace Fifteen_2_3
 {
     class Game2 : Game
     {
-        public Game2(params int[] values)
+        public Game2(params int[] values) : base(values)
         {
-            /**** Перемешиваем ****/
-            int n = values.Length;
+            int direction;
+            int times = Size * 100;
 
-            while (n > 1)
+            for (int k = 0; k < times; k++)
             {
-                var rand = new Random();
+                Random Randomize = new Random(DateTime.Now.Millisecond);
 
-                int k = rand.Next(n--);
-                int temp = values[n];
-                values[n] = values[k];
-                values[k] = temp;
-            }
-            /**********************/
+                direction = Randomize.Next(0, 4); // Сторона для обмена
 
-            int count = 0;
-
-            size = (int)Math.Sqrt(values.Length);
-
-            if (values.Length != Math.Pow(size, 2))
-            {
-                throw new ArgumentException("Поле не соответстует правилам");
-            }
-
-            this.Field = new int[size, size];
-
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < size; j++)
+                if (direction == 0) // Вверх
                 {
-                    if (values[count] == 0)
+                    // Кнопка сверху существует
+                    if (Dictionary[0].X - 1 >= 0)
                     {
-                        zeroX = i;
-                        zeroY = j;
-
-                        Field[i, j] = values[count];
-                        Dictionary.Add(values[count], new Coordinate(i, j));
+                        int shuffleValue = Field[Dictionary[0].X - 1, Dictionary[0].Y];
+                        Shift(shuffleValue);
                     }
-                    else
+                }
+                else if (direction == 1) // Вниз
+                {
+                    if (Dictionary[0].X + 1 < Size)
                     {
-                        Field[i, j] = values[count];
-                        Dictionary.Add(values[count], new Coordinate(i, j));
+                        int shuffleValue = Field[Dictionary[0].X + 1, Dictionary[0].Y];
+                        Shift(shuffleValue);
                     }
-
-                    count++;
+                }
+                else if (direction == 2) // Влево
+                {
+                    if (Dictionary[0].Y - 1 >= 0)
+                    {
+                        int shuffleValue = Field[Dictionary[0].X, Dictionary[0].Y - 1];
+                        Shift(shuffleValue);
+                    }
+                }
+                else // Вправо
+                {
+                    if (Dictionary[0].Y + 1 < Size)
+                    {
+                        int shuffleValue = Field[Dictionary[0].X, Dictionary[0].Y + 1];
+                        base.Shift(shuffleValue);
+                    }
                 }
             }
         }
-
-        //public Game2(params int[] values) : base(values)
-        //{
-        //}
 
         public bool IsWinner()
         {
             int k = 1;
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Size; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < Size; j++)
                 {
-                    if (Field[i, j] != k && Field[size - 1, size - 1] != 0)
+                    if (Field[i, j] != k && Field[Size - 1, Size - 1] != 0)
                     {
                         return false;
                     }

@@ -10,13 +10,13 @@ namespace Fifteen_2_3
     {
         static void Main(string[] args)
         {
-            var fifteen = new Game3(1, 2, 3, 0, 4, 5, 6, 7, 8);
+            var fifteen = new Game2(0, 1, 2, 3, 4, 5, 6, 7, 8);
 
-            fifteen.Shift(1);
-            fifteen.Shift(2);
-            fifteen.Shift(4);
+            //fifteen.Shift(1);
+            //fifteen.Shift(2);
+            //fifteen.Shift(4);
 
-            fifteen.RollbackSteps(4);
+            //fifteen.RollbackSteps(3);
         }
     }
 }
